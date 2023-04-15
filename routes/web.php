@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Models\Customer;
 use App\Models\Product;
@@ -89,6 +90,15 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::POST("quotation", [OrderController::class,'store'])->name('order.store');
 
 });
+
+
+//invoice route
+Route::middleware(['auth','verified'])->group(function(){
+    Route::POST("invoice", [InvoiceController::class,'store'])->name('invoice.store');
+
+});
+
+//endof invoice route
 
 
 

@@ -353,8 +353,7 @@
                         <label>Customer Name *</label>
                         <select id="cu" name="customerName" class="selectpicker form-control" data-style="py-0">
                             @foreach ($customers as $customer)
-                            <option>{{$customer->name}}</option>
-                                
+                            <option value={{$customer->id}}>{{$customer->name}}</option>
                             @endforeach
                         </select>
                         

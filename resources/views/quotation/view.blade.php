@@ -1,5 +1,11 @@
 @extends('layouts.custom')
 
+
+@section('meta')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+
 @section('sidebar')
 <div class="iq-sidebar  sidebar-default ">
     <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
@@ -317,7 +323,8 @@
             </tr>
         </thead>
         <tbody class="ligth-body">
-             
+           
+            
             @foreach ($orders as $order)
             <tr>
                 <td>
@@ -327,20 +334,27 @@
                     </div>
                 </td>
                 <td>{{$order->id}}</td>
-                <td>{{$order->customerName}}</td>
+                <td>{{$order->name}}</td>
                 <td>{{$order->amount}}</td>
                 <td>{{$order->discount}}</td>
-                <td>{{$order->amount-$order->discount}}</td>
+                <td>{{$order->amount- $order->discount}}</td>
                 <td>{{$order->orderDate}}</td>
                 <td><div class="badge badge-warning">{{$order->status}}</div></td>
                 <td>
                     <div class="d-flex align-items-center list-action">
                        
                         <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="view"
-                            href="{{route("quotation.show",$order)}}"><i class="ri-eye-line mr-0"></i></a>
+                            href="{{route("quotation.show",$order->id)}}"><i class="ri-eye-line mr-0"></i></a>
+
+    
 
                         <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="print"
-                            href="{{route("quotation.print",$order)}}"><i class="ri-printer-line mr-0"></i></a>
+                            href="{{route("quotation.print",$order->id)}}"><i class="ri-printer-line mr-0"></i></a>
+
+                            @if ($order->status = "Created")
+                            <a class="badge bg-purple mr-2" onclick="createInvoice({{$order->id}})" data-toggle="tooltip" data-placement="top" title="" data-original-title="create invoice"
+                            href="#"><i class="ri-file-list-3-line mr-0"></i></a>
+                            @endif
                     </div>
                 </td>
             </tr>
