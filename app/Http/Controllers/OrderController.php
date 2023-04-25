@@ -74,7 +74,17 @@ class OrderController extends Controller
             $this->updateProductQuantity($value["id"],$value["quantity"]);
           }
 
-        return [$amount , $customer , $discount , $userId , $date ,$order->id ];
+      //  return [$amount , $customer , $discount , $userId , $date ,$order->id ];
+
+      return response()->json([
+        'amount' => $amount,
+        'customer' => $customer,
+        'discount' => $discount,
+        'userId' => $userId,
+        'date' => $date,
+        'orderId' => $order->id,
+        'nadir' => "nadir"
+    ]);
     }
 
     function updateProductQuantity($id , $quantity){
