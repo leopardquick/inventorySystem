@@ -612,6 +612,56 @@ Index Of Script
 })(jQuery);
 
 
+function createInvoice(orderId){
+  
+  Swal.fire({
+    title: 'Do you want to create invoice?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Create',
+    denyButtonText: `Don't create`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+        
+      $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/invoice/',
+        dataType : 'json',
+        type: 'POST',
+        data: {
+          "orderId" : orderId
+        },
+        success: function(data) {
+          Swal.fire('Created!', '', 'success')
+          
+          //do stuff
+      },
+      error: function(data) {
+          //do stuff
+         
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to create quotation',
+            icon: 'error',
+            confirmButtonText: 'close'
+          })
+          console.log("error")
+          console.log(data)
+      },
+      complete: function(){
+       
+          //do stuff
+          console.log("complete")
+      }
+   });
+    } else if (result.isDenied) {
+      Swal.fire('Invoice not Created', '', 'info')
+    }
+  })
+}
 
 let products = [] ;
 
@@ -626,6 +676,7 @@ var discountInput = document.getElementById("discountInput");
 var orderButton = document.getElementById("addOrder");
 var customerName = document.getElementById("cu");
 var loading = document.getElementById("loadingId");
+
 
 
 customer = customerName.value;
@@ -798,3 +849,15 @@ function getTotal(){
 function calculateDiscount(){
   discountRate = 10
 }
+
+
+
+
+
+
+
+
+
+
+
+

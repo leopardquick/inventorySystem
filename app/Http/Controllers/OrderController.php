@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Util\Json;
 
 class OrderController extends Controller
 {
@@ -18,9 +20,16 @@ class OrderController extends Controller
      */
     public function index()
     {
+        
+      $all = DB::table("orders")
+      ->join("customers","orders.customerName","=","customers.id")
+      ->select("orders.id","status","amount","discount","orderDate","name")
+      ->get();
         //
+
+       
         return view("quotation.view",[
-            "orders" => Order::all()
+            "orders" => $all
         ]);
     }
 
@@ -71,7 +80,7 @@ class OrderController extends Controller
             $orderProduct->quantity= $value["quantity"] ;
             $orderProduct->price = $value["price"] ;
             $orderProduct->save();
-            $this->updateProductQuantity($value["id"],$value["quantity"]);
+          //  $this->updateProductQuantity($value["id"],$value["quantity"]);
           }
 
       //  return [$amount , $customer , $discount , $userId , $date ,$order->id ];
@@ -101,9 +110,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+    
 
-     // $products = OrderProduct::where("orderId","=" ,$order->id)->get();
+    $customer = Customer::find($order->customerName);
+
+    
 
       $products = DB::table("order_products")
                             ->join("products","order_products.productId","=","products.id")
@@ -113,14 +124,15 @@ class OrderController extends Controller
       
     $data = [
         "products" => $products,
-        "order" => $order
+        "order" => $order,
+        "customer" => $customer
 
     ];
 
     
-   
+
      
-      return view("quotation.show",$data);
+       return view("quotation.show",$data);
      
     }
 
@@ -165,6 +177,9 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function printQuotation(Order $order){
+
+        $customer = Customer::find($order->customerName);
+
         $products = DB::table("order_products")
         ->join("products","order_products.productId","=","products.id")
         ->select("order_products.orderId","order_products.quantity","order_products.price","products.name","products.logo","code")
@@ -173,7 +188,8 @@ class OrderController extends Controller
 
             $data = [
             "products" => $products,
-            "order" => $order
+            "order" => $order,
+            "customer" => $customer
 
             ];
         $pdf = Pdf::loadView('pdf.quotation',$data);

@@ -401,12 +401,10 @@
                 </td>
                 <td>
                     <div class="box-text">
-                        <p>Rajkot</p>
-                        <p>360012</p>
-                        <p>Hanumanji Temple,</p>
-                        <p>Lati Ploat</p>
-                        <p>Gujarat</p>
-                        <p>Contact : 1234567890</p>
+                        <p>{{$customer->name}}</p>
+                        <p>{{$customer->email}}</p>
+                        <p>{{$customer->address}}</p>
+                        <p>Contact : {{$customer->phone}}</p>
                     </div>
                 </td>
             </tr>
