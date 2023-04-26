@@ -1,8 +1,11 @@
-@extends('layouts.app-master')
+@extends('layouts.custom')
+
+@section('sidebar')
+  @include('layouts.partials.sidebar')
+@endsection
 
 @section('content')
-    
-    <h1 class="mb-3">Laravel 8 User Roles and Permissions Step by Step Tutorial - codeanddeploy.com</h1>
+<div class="col-lg-12">
 
     <div class="bg-light p-4 rounded">
         <h1>Roles</h1>
@@ -45,4 +48,7 @@
         </div>
 
     </div>
+</div>
 @endsection
+
+

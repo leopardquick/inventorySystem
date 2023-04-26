@@ -1,6 +1,11 @@
-@extends('layouts.app-master')
+@extends('layouts.custom')
+
+@section('sidebar')
+  @include('layouts.partials.sidebar')
+@endsection
 
 @section('content')
+<div class="col-lg-12">
     <div class="bg-light p-4 rounded">
         <h1>{{ ucfirst($role->name) }} Role</h1>
         <div class="lead">
@@ -31,4 +36,6 @@
         <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
         <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
     </div>
+</div>
 @endsection
+

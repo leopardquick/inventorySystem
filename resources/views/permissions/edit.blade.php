@@ -1,6 +1,12 @@
-@extends('layouts.app-master')
+
+@extends('layouts.custom')
+
+@section('sidebar')
+  @include('layouts.partials.sidebar')
+@endsection
 
 @section('content')
+<div class="col-lg-12">
     <div class="bg-light p-4 rounded">
         <h2>Edit permission</h2>
         <div class="lead">
@@ -31,4 +37,7 @@
         </div>
 
     </div>
+</div>
 @endsection
+
+
